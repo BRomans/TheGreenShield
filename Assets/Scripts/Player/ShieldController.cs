@@ -52,38 +52,26 @@ public class ShieldController : FlashObject3D
         }
     }
 
-    public void SwitchState(bool state)
+    public void SetShieldActive()
     {
-        activated = state;
+        movingDirection = "up";
         movingEnabled = true;
-        //_selected.SetActive(activated);
-        ChangeDirection();
+        _shield.SetActive(true);
     }
 
-    public void ChangeDirection() 
+    public void SetShieldInactive()
     {
-        if(movingDirection == "up")
-        {
-            
-            movingDirection = "down";
-            _shield.SetActive(activated);
-        }
-        else
-        {
-            movingDirection = "up";
-            _shield.SetActive(activated);
-        }
+        movingEnabled = true;
+        movingDirection = "down";
     }
 
     public void MoveUp()
     {
-        
         if (_shield.transform.position.y < targetHeight && movingEnabled)
         {
-            Vector3 upDirection = Vector3.up.normalized * moveSpeed * Time.deltaTime;
-            //Debug.Log("Moving up" + upDirection);
+            Vector3 upDirection = moveSpeed * Time.deltaTime * Vector3.up.normalized;
             _shield.transform.Translate(upDirection, Space.World);
-            Vector3 forwardDirection = Vector3.back.normalized * moveSpeed * Time.deltaTime;
+            Vector3 forwardDirection = moveSpeed * Time.deltaTime * Vector3.back.normalized;
             _shield.transform.Translate(forwardDirection, Space.World);
         } 
         if(_shield.transform.position.y >= targetHeight)
@@ -96,15 +84,15 @@ public class ShieldController : FlashObject3D
     {
         if (_shield.transform.position.y > originalHeight && movingEnabled)
         {
-            Vector3 downDirection = Vector3.down.normalized * moveSpeed * Time.deltaTime;
-            //Debug.Log("Moving down" + downDirection);
+            Vector3 downDirection = moveSpeed * Time.deltaTime * Vector3.down.normalized;
             _shield.transform.Translate(downDirection, Space.World);
-            Vector3 backwardDirection = Vector3.forward.normalized * moveSpeed * Time.deltaTime;
+            Vector3 backwardDirection = moveSpeed * Time.deltaTime * Vector3.forward.normalized;
             _shield.transform.Translate(backwardDirection, Space.World);
         }
         if (_shield.transform.position.y <= originalHeight)
         {
             movingEnabled = false;
+            _shield.SetActive(false);
         }
     }
 }

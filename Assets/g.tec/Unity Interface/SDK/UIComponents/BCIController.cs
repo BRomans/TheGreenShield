@@ -106,7 +106,8 @@ public class BCIController : MonoBehaviour
         _startTrainingButton.interactable = true;
         _disconnectButton.interactable = true;
         _connectButton.interactable = false;
-
+        _disconnectButton.gameObject.SetActive(true);
+        _connectButton.gameObject.SetActive(false);
     }
 
     public void OnBtnDisconnectClicked()
@@ -118,6 +119,8 @@ public class BCIController : MonoBehaviour
             _connectButton.interactable = true;
             _disconnectButton.interactable = false;
             _startTrainingButton.interactable = false;
+            _disconnectButton.gameObject.SetActive(false);
+            _connectButton.gameObject.SetActive(true);
 
         }
         catch (System.Exception e)
@@ -133,6 +136,8 @@ public class BCIController : MonoBehaviour
             _BCIManager.StartTrainingParadigm(0);
             _startTrainingButton.interactable = false;
             _stopTrainingButton.interactable = true;
+            _startTrainingButton.gameObject.SetActive(false);
+            _stopTrainingButton.gameObject.SetActive(true);
 
         }
         catch (System.Exception e)
@@ -148,6 +153,8 @@ public class BCIController : MonoBehaviour
             _BCIManager.StopTrainingParadigm(0);
             _startTrainingButton.interactable = true;
             _stopTrainingButton.interactable = false;
+            _startTrainingButton.gameObject.SetActive(true);
+            _stopTrainingButton.gameObject.SetActive(false);
         }
         catch (System.Exception e)
         {
@@ -165,6 +172,8 @@ public class BCIController : MonoBehaviour
             _startTrainingButton.interactable = false;
             _appOnButton.interactable = false;
             _appOffButton.interactable = true;
+            _appOnButton.gameObject.SetActive(false);
+            _appOffButton.gameObject.SetActive(true);
         }
         catch (System.Exception e)
         {
@@ -194,10 +203,13 @@ public class BCIController : MonoBehaviour
         try
         {
             _stopTrainingButton.interactable = false;
-            _appOffButton.interactable = false;
             _startTrainingButton.interactable = true;
             _appOnButton.interactable = true;
             _appOffButton.interactable = false;
+            _stopTrainingButton.gameObject.SetActive(false);
+            _startTrainingButton.gameObject.SetActive(true);
+            _appOnButton.gameObject.SetActive(true);
+            _appOffButton.gameObject.SetActive(false);
         }
         catch (System.Exception e)
         {
