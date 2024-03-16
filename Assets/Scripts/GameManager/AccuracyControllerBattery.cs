@@ -29,6 +29,8 @@ public class AccuracyControllerBattery : MonoBehaviour
     void Start()
     {
         _battery = NoBattery;
+        LowBattery.SetActive(false);
+        FullBattery.SetActive(false);
         _classifierAccuracy = ClassifierAccuracyLabel.NA;
     }
 

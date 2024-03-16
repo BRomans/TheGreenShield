@@ -5,7 +5,7 @@ using Gtec.Chain.Common.Algorithms;
 using Gtec.Chain.Common.Templates.Utilities;
 using Unity.VisualScripting;
 
-public class AccuracyController : MonoBehaviour
+public class AccuracyControllerMaterial : MonoBehaviour
 {
     [SerializeField]
     private GameObject AccuracyObject;
