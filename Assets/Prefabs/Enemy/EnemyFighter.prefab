@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87311f99611a9e04e9074a060cd6853f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  moveSpeed: 1.5
   rotationSpeed: 2
   playerTransform: {fileID: 0}
   destroyDistance: 1
