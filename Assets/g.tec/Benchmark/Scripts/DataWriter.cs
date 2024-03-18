@@ -127,7 +127,7 @@ public class DataWriter : MonoBehaviour
         if (_scoreWriter != null && _experimentWriter != null)
         {
             _experimentWriter.WriteLine("current_ts,n_classes,current_class,current_cue");
-            _scoreWriter.WriteLine("start_ts,stop_ts,n_classes,corr_classified,miss_classified,itr,accuracy,elapsed_time_ms");
+            _scoreWriter.WriteLine("start_ts,stop_ts,n_classes,corr_classified,miss_classified,itr,accuracy,elapsed_time_s");
         }
     }
 }

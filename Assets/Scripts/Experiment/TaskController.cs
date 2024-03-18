@@ -9,7 +9,7 @@ public class TaskController : MonoBehaviour
     private int nClasses;
 
     [SerializeField]
-    private int nTrials;
+    public int nTrials;
 
     [SerializeField]
     [Tooltip("Performance calculator")]
@@ -38,13 +38,6 @@ public class TaskController : MonoBehaviour
             if (enemyCounter == 0)
             {
                 StartTaskTimer();
-            }
-        }
-        if (triggerName == "EndTask")
-        {
-            if (enemyCounter == nTrials)
-            {
-                StopTaskTimer();
             }
         }
     }

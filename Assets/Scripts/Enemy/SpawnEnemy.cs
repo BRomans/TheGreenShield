@@ -42,6 +42,10 @@ public class SpawnEnemy : MonoBehaviour
         ResetSpawningPoints(Color.blue);
 
         _taskController = GameObject.FindGameObjectWithTag("Task").GetComponent<TaskController>();
+        if (_taskController != null)
+        {
+            enemyTotalNumber = _taskController.nTrials;
+        }
     }
 
     private void Update()
@@ -51,7 +55,7 @@ public class SpawnEnemy : MonoBehaviour
             // If the system is spawning
             if (enemyCount == enemyTotalNumber)
             {
-                Debug.Log("Finished");
+                Debug.Log("End of the wave");
                 // When all enemies are spawned
                 StopSpawning();
                 gameOver = true;
@@ -61,6 +65,13 @@ public class SpawnEnemy : MonoBehaviour
 
     public void StartSpawning()
     {
+        enemyCount = 0;
+        gameOver = false;
+        // If the task controller is set, trigger the start task event.
+        if(_taskController != null)
+        {
+            _taskController.TaskTriggerEntered("StartTask");
+        }
         // Start spawning enemies at regular intervals.
         InvokeRepeating("Spawn", 0f, spawnInterval);
     }
@@ -88,13 +99,7 @@ public class SpawnEnemy : MonoBehaviour
 
         // Instantiate the enemy from the enemyPrefab at the selected spawn point.
         EnemyController enemy = Instantiate(enemyPrefab, randomSpawnPoint.position, Quaternion.identity).GetComponent<EnemyController>();
-        enemy.SetClassId(spawnPointIndex);
-
-        // If the task controller is set, trigger the start task event.
-        if(_taskController != null)
-        {
-            _taskController.TaskTriggerEntered("StartTask");
-        }
+        enemy.CueId = spawnPointIndex + 1;
 
         // Set the name of the spawned enemy.
         enemy.name = "Enemy " + enemyCount;
@@ -111,12 +116,12 @@ public class SpawnEnemy : MonoBehaviour
 
     public void SpawnTraining(float trainingSpeed)
     {
-        Transform randomSpawnPoint = spawnPoints[0];
+        Transform randomSpawnPoint = spawnPoints[1];
         StartCoroutine(changeSpawnPointColor(SpawnPointToparticleSystem[randomSpawnPoint], Color.red));
 
         // Instantiate the enemy from the enemyPrefab at the selected spawn point.
         EnemyController enemy = Instantiate(enemyPrefab, randomSpawnPoint.position, Quaternion.identity).GetComponent<EnemyController>();
-
+        enemy.CueId = 0;
         // Make the enemy face towards the player's position.
         Vector3 direction = playerTransform.position - enemy.transform.position;
         enemy.transform.rotation = Quaternion.LookRotation(direction);

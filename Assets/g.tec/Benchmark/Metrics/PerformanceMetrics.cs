@@ -89,7 +89,7 @@ namespace Gtec.Benchmark
                                        $"Correct: {score._correctlyClassified}\n" +
                                        $"Missed: {score._missClassified}\n" +
                                        $"Accuracy: {score._accuracy:F2}\n" +
-                                       $"ITR: {score._itr:F2}\n" +
+                                       $"ITR: {score._itr:F4}\n" +
                                        $"Completion Time: {score._elapsedTime:F2}s\n";
                     if (_printOnScreen)
                         GUI.TextArea(new Rect(_guiPosition.x, _guiPosition.y * (_scores.IndexOf(score) + 1), _guiSquareSize.x, _guiSquareSize.y), scoreText);

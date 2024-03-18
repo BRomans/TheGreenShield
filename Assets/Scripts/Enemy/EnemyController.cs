@@ -15,12 +15,7 @@ public class EnemyController : MonoBehaviour
     private AudioSource explosionSound;
     private Vector3 playerPosition;
 
-    private int CueId;
-
-    public void SetClassId(int cueId)
-    {
-        CueId = cueId;
-    }
+    public int CueId { get;  set; }
 
     private void Start()
     {
@@ -69,13 +64,16 @@ public class EnemyController : MonoBehaviour
             explosionSound.Play();
             ScoreManager.Instance.AddScore(1);
 
-            TaskController taskController = GameObject.FindGameObjectWithTag("Task").GetComponent<TaskController>();
-            taskController.EnemyHit(CueId);
-
+            if(CueId != 0)
+            {
+                TaskController taskController = GameObject.FindGameObjectWithTag("Task").GetComponent<TaskController>();
+                taskController.EnemyHit(CueId);
+            }
+            
             Destroy(smoke, totalDuration / 2);
             Destroy(gameObject);
         }
-        if(other.CompareTag("EndTask"))
+        if(other.CompareTag("EndTask") && CueId != 0)
         {
             Debug.Log("Collided with: " + other.name);
             TaskController taskController = GameObject.FindGameObjectWithTag("Task").GetComponent<TaskController>();
