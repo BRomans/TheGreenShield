@@ -16,9 +16,6 @@ public class TaskController : MonoBehaviour
     protected List<PerformanceMetrics> _performanceCalculators;
 
     [SerializeField]
-    private Collider StartTask;
-
-    [SerializeField]
     private Collider EndTask;
 
     private int enemyCounter = 0;
