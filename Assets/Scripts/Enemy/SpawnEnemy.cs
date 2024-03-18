@@ -23,9 +23,9 @@ public class SpawnEnemy : MonoBehaviour
     private int enemyCount = 0; // Counter for naming enemies.
     public int enemyTotalNumber;
 
-    private bool spawning = false;
     private bool gameOver = false;
 
+    private TaskController _taskController;
 
     private Dictionary<Transform, ParticleSystem> SpawnPointToparticleSystem;
 
@@ -40,6 +40,8 @@ public class SpawnEnemy : MonoBehaviour
             SpawnPointToparticleSystem[spawnPoint] = spawnPoint.gameObject.GetComponent<ParticleSystem>();
         }
         ResetSpawningPoints(Color.blue);
+
+        _taskController = GameObject.FindGameObjectWithTag("Task").GetComponent<TaskController>();
     }
 
     private void Update()
@@ -79,13 +81,20 @@ public class SpawnEnemy : MonoBehaviour
     private void Spawn()
     {
         // Randomly select one of the three spawn points.
-        Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+        int spawnPointIndex = Random.Range(0, spawnPoints.Length);
+        Transform randomSpawnPoint = spawnPoints[spawnPointIndex];
 
         StartCoroutine(changeSpawnPointColor(SpawnPointToparticleSystem[randomSpawnPoint], Color.red));
 
         // Instantiate the enemy from the enemyPrefab at the selected spawn point.
         EnemyController enemy = Instantiate(enemyPrefab, randomSpawnPoint.position, Quaternion.identity).GetComponent<EnemyController>();
+        enemy.SetClassId(spawnPointIndex);
 
+        // If the task controller is set, trigger the start task event.
+        if(_taskController != null)
+        {
+            _taskController.TaskTriggerEntered("StartTask");
+        }
 
         // Set the name of the spawned enemy.
         enemy.name = "Enemy " + enemyCount;

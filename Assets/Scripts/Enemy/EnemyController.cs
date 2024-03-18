@@ -15,6 +15,13 @@ public class EnemyController : MonoBehaviour
     private AudioSource explosionSound;
     private Vector3 playerPosition;
 
+    private int CueId;
+
+    public void SetClassId(int cueId)
+    {
+        CueId = cueId;
+    }
+
     private void Start()
     {
         explosionSound = GameObject.FindGameObjectWithTag("Explosion Sound").GetComponent<AudioSource>();
@@ -60,11 +67,19 @@ public class EnemyController : MonoBehaviour
             ParticleSystem parts = smoke.GetComponent<ParticleSystem>();
             float totalDuration = parts.main.duration + parts.main.startLifetimeMultiplier;
             explosionSound.Play();
-
             ScoreManager.Instance.AddScore(1);
+
+            TaskController taskController = GameObject.FindGameObjectWithTag("Task").GetComponent<TaskController>();
+            taskController.EnemyHit(CueId);
 
             Destroy(smoke, totalDuration / 2);
             Destroy(gameObject);
+        }
+        if(other.CompareTag("EndTask"))
+        {
+            Debug.Log("Collided with: " + other.name);
+            TaskController taskController = GameObject.FindGameObjectWithTag("Task").GetComponent<TaskController>();
+            taskController.EnemyMissed(CueId);
         }
     }
 }
